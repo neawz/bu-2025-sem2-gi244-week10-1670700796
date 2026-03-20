@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private InputAction jumpAction;
     private bool isOnGround = true;
+    private int jumpCount = 0;
 
     private Animator playerAnim;
     private AudioSource playerAudio;
@@ -40,13 +41,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (jumpCount >= 2)
+        {
+            isOnGround = false;
+            jumpCount = 0; return;
+        }
+
         if (jumpAction.triggered && isOnGround && !gameOver)
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
-            isOnGround = false;
             playerAnim.SetTrigger("Jump_trig");
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSfx);
+            jumpCount++;
         }
     }
 
