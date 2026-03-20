@@ -16,6 +16,15 @@ public class MoveLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            speed *= 2;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            speed /= 2;
+        }
+
         if (!playerController.gameOver)
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
