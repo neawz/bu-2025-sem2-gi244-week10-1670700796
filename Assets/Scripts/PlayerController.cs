@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private bool isOnGround = true;
     private int jumpCount = 0;
+    private bool haveDoubleJump = true;
 
     private Animator playerAnim;
     private AudioSource playerAudio;
@@ -43,14 +44,15 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpCount >= 2)
         {
-            isOnGround = false;
+            haveDoubleJump = false;
             jumpCount = 0; return;
         }
 
-        if (jumpAction.triggered && isOnGround && !gameOver)
+        if (jumpAction.triggered && !gameOver && haveDoubleJump)
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
             playerAnim.SetTrigger("Jump_trig");
+            isOnGround = false;
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSfx);
             jumpCount++;
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+            haveDoubleJump = true;
             dirtParticle.Play();
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
