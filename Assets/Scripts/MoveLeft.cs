@@ -4,6 +4,8 @@ public class MoveLeft : MonoBehaviour
 {
     public float speed = 10f;
 
+    private float normalSpeed = 10f;
+    private float dashSpeed = 20f;
     private float leftBound = -15;
 
     private PlayerController playerController;
@@ -17,13 +19,13 @@ public class MoveLeft : MonoBehaviour
     void Update()
     {
         // Exam 03 - Dash
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (playerController.isDashing)
         {
-            speed *= 2;
+            speed = dashSpeed;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (!playerController.isDashing)
         {
-            speed /= 2;
+            speed = normalSpeed;
         }
 
         if (!playerController.gameOver)

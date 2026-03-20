@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public int hp;
     public float jumpForce;
+    public bool isDashing;
     public float gravityModifier;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private InputAction jumpAction;
+    private InputAction dashAction;
     private bool isOnGround = true;
     private int jumpCount = 0;
     private bool haveDoubleJump = true;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         Physics.gravity *= gravityModifier;
 
+        dashAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
 
         gameOver = false;
@@ -58,6 +61,15 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSfx);
             jumpCount++;
+        }
+
+        if (dashAction.IsPressed())
+        {
+            isDashing = true;
+        }
+        else
+        {
+            isDashing = false;
         }
     }
 
