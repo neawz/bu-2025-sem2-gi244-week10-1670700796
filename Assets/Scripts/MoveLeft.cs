@@ -16,6 +16,7 @@ public class MoveLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Exam 03 - Dash
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             speed *= 2;

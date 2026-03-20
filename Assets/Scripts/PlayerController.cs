@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public int hp;
     public float jumpForce;
     public float gravityModifier;
     public ParticleSystem explosionParticle;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Exam 02 - Double Jump
         if (jumpCount >= 2)
         {
             haveDoubleJump = false;
@@ -69,13 +71,21 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Game Over!");
-            gameOver = true;
-            playerAnim.SetBool("Death_b", true);
-            playerAnim.SetInteger("DeathType_int", 1);
-            explosionParticle.Play();
-            dirtParticle.Stop();
+            // Exam 04 - PlayerHP
+            //explosionParticle.Play();
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            Destroy(collision.gameObject);
             playerAudio.PlayOneShot(crashSfx);
+            hp--;
+
+            if (hp <= 0)
+            {
+                Debug.Log("Game Over!");
+                gameOver = true;
+                playerAnim.SetBool("Death_b", true);
+                playerAnim.SetInteger("DeathType_int", 1);
+                dirtParticle.Stop();
+            }
         }
     }
 

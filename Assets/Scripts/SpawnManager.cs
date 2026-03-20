@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnObstacle()
     {
+        // Exam 01 - Random Spawn
         var randomCount = Random.Range(0, obstaclePrefabs.Length);
         Instantiate(obstaclePrefabs[randomCount], spawnPos, obstaclePrefabs[randomCount].transform.rotation);
     }
